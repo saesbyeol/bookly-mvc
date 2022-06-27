@@ -10,7 +10,24 @@ namespace Bookly.Controllers
 {
     public class BooksController : Controller
     {
-        // GET: Books/Random
+
+
+        public ViewResult Index()
+        {
+            var movies = GetBooks();
+            return View(movies);
+        }
+        private IEnumerable<Book> GetBooks()
+        {
+            return new List<Book>
+            {
+                new Book { Id = 1, Name = "The Ballad of the Empty throne" },
+                new Book { Id = 2, Name = "Cum" }
+            };
+        }
+
+
+        //GET: Books/Random
         public ActionResult Random()
         {
             var book = new Book() { Name = "Shrek!" };
