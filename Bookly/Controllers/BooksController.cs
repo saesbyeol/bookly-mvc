@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Bookly.Models;
 using Bookly.ViewModels;
 
+
 namespace Bookly.Controllers
 {
     public class BooksController : Controller
@@ -29,6 +30,62 @@ namespace Bookly.Controllers
             return View(books);
         }
 
+        // ADD NEW BOOK
+        // GET: Books/new
+        public ViewResult New()
+        {
+            var genres = _context.Genres.ToList();
+            var viewModel = new BookFormViewModel
+            {
+                Genres = genres
+            };
+
+            return View("BookForm", viewModel);
+        }
+
+        // CREATE NEW BOOK
+        [HttpPost]
+        public ActionResult Save(Book book)
+        {
+            if (book.Id == 0)
+                _context.Books.Add(book);
+            else
+            {
+                var bookInDb = _context.Books.Single(b => b.Id == book.Id);
+
+                bookInDb.Name = book.Name;
+                bookInDb.Author = book.Author;
+                bookInDb.ReleaseDate = book.ReleaseDate;
+                bookInDb.DateAdded = book.DateAdded;
+                bookInDb.GenreId = book.GenreId;
+                bookInDb.NumberInStock = book.NumberInStock;
+
+
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Books");
+        }
+
+        // EDIT BOOK DETAILS
+        // GET: Books/edit/id
+        public ActionResult Edit(int id)
+        {
+            var book = _context.Books.SingleOrDefault(c => c.Id == id);
+
+            if (book == null)
+                return HttpNotFound();
+
+            var viewModel = new BookFormViewModel
+            {
+                Book = book,
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("BookForm", viewModel);
+
+        }
+
         // SEE BOOK DETAILS
         // GET: Books/details/id
         public ActionResult Details(int id)
@@ -39,6 +96,8 @@ namespace Bookly.Controllers
 
             return View(book);
         }
+
+
 
         //GET: Books/Random
         public ActionResult Random()

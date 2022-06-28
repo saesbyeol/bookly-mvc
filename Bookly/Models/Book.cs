@@ -12,16 +12,25 @@ namespace Bookly.Models
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "Book Title")]
         public string Name { get; set; }
         [Required]
         [StringLength(255)]
+        [Display(Name = "Author")]
+
         public string Author { get; set; }
-        [Required]
         public Genre Genre { get; set; }
+        [Display(Name = "Genre")]
+        [Required]
+
         public byte GenreId { get; set; }
 
-        public DateTime DateAdded { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? DateAdded { get; set; }
+        [Display(Name = "Date of Release")]
+        public DateTime? ReleaseDate { get; set; }
+        [Display(Name = "Stock #")]
+
+        // CHANGE TO INT LATER
         public byte NumberInStock { get; set; }
 
 
