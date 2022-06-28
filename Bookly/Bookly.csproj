@@ -236,6 +236,10 @@
     <Compile Include="Migrations\202206282219103_ChangedBookModel.designer.cs">
       <DependentUpon>202206282219103_ChangedBookModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206282344013_fix.cs" />
+    <Compile Include="Migrations\202206282344013_fix.designer.cs">
+      <DependentUpon>202206282344013_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -378,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206282219103_ChangedBookModel.resx">
       <DependentUpon>202206282219103_ChangedBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206282344013_fix.resx">
+      <DependentUpon>202206282344013_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

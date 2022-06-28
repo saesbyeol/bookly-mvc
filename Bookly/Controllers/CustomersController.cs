@@ -39,6 +39,8 @@ namespace Bookly.Controllers
 
         // CREATE NEW CUSTOMER
         [HttpPost]
+        // ANTI XSRF
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             // MODEL STATE IS USED TO CHECK DATA VALIDATION

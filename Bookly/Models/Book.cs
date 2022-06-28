@@ -10,25 +10,28 @@ namespace Bookly.Models
     {
         public int Id { get; set; }
 
-        [Required]
+
         [StringLength(255)]
         [Display(Name = "Book Title")]
         public string Name { get; set; }
-        [Required]
+
+
+        [Required(ErrorMessage = "* Please enter the author.")]
         [StringLength(255)]
         [Display(Name = "Author")]
-
         public string Author { get; set; }
-        public Genre Genre { get; set; }
-        [Display(Name = "Genre")]
-        [Required]
 
+        public Genre Genre { get; set; }
+
+        [Required(ErrorMessage = "* Please select a genera.")]
+        [Display(Name = "Genre")]
         public byte GenreId { get; set; }
 
         public DateTime? DateAdded { get; set; }
         [Display(Name = "Date of Release")]
         public DateTime? ReleaseDate { get; set; }
         [Display(Name = "Stock #")]
+        [Range(1,999)]
 
         // CHANGE TO INT LATER
         public byte NumberInStock { get; set; }
