@@ -33,6 +33,12 @@ namespace Bookly.Models
         // CHANGE TO INT LATER
         public byte NumberInStock { get; set; }
 
+        /* TODO:
+         - ADD PICTURE
+         - ADD SHORT BIO
+         - ADD BOOK CONDITION
+
+        */
 
     }
 }
