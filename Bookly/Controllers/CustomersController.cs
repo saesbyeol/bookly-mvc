@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bookly.Models;
+using Bookly.ViewModels;
 
 namespace Bookly.Controllers
 {
@@ -22,6 +23,28 @@ namespace Bookly.Controllers
         {
             _context.Dispose();
         }
+         
+        // ADD NEW CUSTOMER
+        // GET: Customers/new
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+            return View(viewModel);
+        }
+
+        // CREATE NEW CUSTOMER
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
+        }
 
         // GET: Customers
         public ActionResult Index()
@@ -31,9 +54,10 @@ namespace Bookly.Controllers
             return View(customers);
         }
 
+        // SEE CUSTOMER DETAILS
+        // GET: Customers/details/id
         public ActionResult Details(int id)
         {
-            
             var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
