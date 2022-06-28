@@ -216,10 +216,23 @@
     <Compile Include="Migrations\202206281946144_AddedMembershipTypeSelector.designer.cs">
       <DependentUpon>202206281946144_AddedMembershipTypeSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206282031400_addedBooksDb.cs" />
+    <Compile Include="Migrations\202206282031400_addedBooksDb.designer.cs">
+      <DependentUpon>202206282031400_addedBooksDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206282034195_PopulateBookGenres.cs" />
+    <Compile Include="Migrations\202206282034195_PopulateBookGenres.designer.cs">
+      <DependentUpon>202206282034195_PopulateBookGenres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206282043146_AddedAuthorIntoBooks.cs" />
+    <Compile Include="Migrations\202206282043146_AddedAuthorIntoBooks.designer.cs">
+      <DependentUpon>202206282043146_AddedAuthorIntoBooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -291,6 +304,7 @@
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Customers\CustomerForm.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -338,6 +352,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206281946144_AddedMembershipTypeSelector.resx">
       <DependentUpon>202206281946144_AddedMembershipTypeSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206282031400_addedBooksDb.resx">
+      <DependentUpon>202206282031400_addedBooksDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206282034195_PopulateBookGenres.resx">
+      <DependentUpon>202206282034195_PopulateBookGenres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206282043146_AddedAuthorIntoBooks.resx">
+      <DependentUpon>202206282043146_AddedAuthorIntoBooks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

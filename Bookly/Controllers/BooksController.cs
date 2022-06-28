@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,22 +11,34 @@ namespace Bookly.Controllers
 {
     public class BooksController : Controller
     {
+        private ApplicationDbContext _context;
+        public BooksController()
+        {
+            _context = new ApplicationDbContext();
+        }
 
+        // DISPOSING THE OBJECT
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
 
         public ViewResult Index()
         {
-            var movies = GetBooks();
-            return View(movies);
-        }
-        private IEnumerable<Book> GetBooks()
-        {
-            return new List<Book>
-            {
-                new Book { Id = 1, Name = "The Ballad of the Empty throne" },
-                new Book { Id = 2, Name = "Cum" }
-            };
+            var books = _context.Books.Include(b => b.Genre).ToList();
+            return View(books);
         }
 
+        // SEE BOOK DETAILS
+        // GET: Books/details/id
+        public ActionResult Details(int id)
+        {
+            var book = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
+            if (book == null)
+                return HttpNotFound();
+
+            return View(book);
+        }
 
         //GET: Books/Random
         public ActionResult Random()
