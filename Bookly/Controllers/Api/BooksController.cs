@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 using System.Web.UI.WebControls;
 using AutoMapper;
@@ -23,9 +24,12 @@ namespace Bookly.Controllers.Api
         //GET: /api/books
         public IEnumerable<BookDto> GetBooks()
         {
-            return _context.Books.ToList().Select(Mapper.Map<Book, BookDto>);
+            return _context.Books
+                .Include(b => b.Genre)
+                .ToList()
+                .Select(Mapper.Map<Book, BookDto>);
         }
-
+        
 
         //GET: /api/books/1
         public IHttpActionResult GetBook(int id)

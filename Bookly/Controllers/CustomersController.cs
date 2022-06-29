@@ -74,8 +74,7 @@ namespace Bookly.Controllers
         public ActionResult Index()
         {
             // GET CUSTOMERS FROM DB
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-            return View(customers);
+            return View();
         }
 
         // SEE CUSTOMER DETAILS

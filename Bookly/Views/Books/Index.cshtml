@@ -4,27 +4,99 @@
     ViewBag.Title = "Movies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <h2>Books</h2>
 <p>
-    @Html.ActionLink("New Book", "New", "Books", null, new {@class = "btn btn-primary"})
+    @Html.ActionLink("New Book", "New", "Books", null, new { @class = "btn btn-primary" })
 </p>
-<table class="table table-bordered table-hover">
+<table id="books" class="table table-bordered table-hover">
     <thead>
-        <tr>
-            <th>Book</th>
-            <th>Author</th>
-            <th>Genre</th>
-        </tr>
+    <tr>
+        <th>Book</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Delete</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var book in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(book.Name, "Edit", "Books", new {id = book.Id}, null)</td>
-                <td>@book.Author</td>
-                <td>@book.Genre.Name</td>
-            </tr>
-        }
     </tbody>
 </table>
+
+@section scripts
+{
+
+    <script>
+
+        // DELETE CUSTOMER
+        // DO NOT TOUCH THIS CANCER FUNCTION PIECE OF SHIT LMAOOOOOOO
+        $(document).ready(function () {
+
+            // FILL DATA-TABLES WITH API DATA
+            // TODO: ADD THE REST OF THE COLUMNS
+            var table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns:
+                [
+                    {
+                        data: "name",
+                        render: function(data, type, book) {
+                            return "<a href='/books/edit/" + book.id + "'>" + book.name + "</a>";
+                        }
+                    },
+                    {
+                        data:"author"
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-book-id=" + data + ">Delete</button";
+                        }
+                    }
+                ]
+            });
+
+
+
+            $("#books").on("click", ".js-delete", function (e) {
+                e.preventDefault(); // CANCEL DEFAULT FUNCTION
+
+                // RECUPERATE VALUES
+                var button = $(this);
+                var message = $(this).data('confirm');
+
+                // SWAL POP UP
+                swal({
+                        title: "Are you sure that you want to delete this book",
+                        text: message,
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+
+                            $.ajax({
+                                url: "/api/books/" + button.attr("data-book-id"),
+                                method: "DELETE",
+                                success: function () {
+                                    table.row(button.parents("tr")).remove().draw();
+                                }
+                            });
+                            swal("Poof! The book is gone!", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("Never mind, the book is safe!");
+                        }
+                    });
+            });
+        });
+    </script>
+}

@@ -26,8 +26,7 @@ namespace Bookly.Controllers
 
         public ViewResult Index()
         {
-            var books = _context.Books.Include(b => b.Genre).ToList();
-            return View(books);
+            return View();
         }
 
         // ADD NEW BOOK

@@ -12,10 +12,13 @@ namespace Bookly.App_Start
     {
         public MappingProfile()
         {
+            // DOMAIN TO DTO
             Mapper.CreateMap<Customer, CustomerDto>();
             // Mapper.CreateMap<CustomerDto, Customer>();
 
             Mapper.CreateMap<Book, BookDto>();
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
+            Mapper.CreateMap<Genre, GenreDto>();
 
             // DTO TO DOMAIN
             Mapper.CreateMap<CustomerDto, Customer>()
