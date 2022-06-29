@@ -6,8 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="~/Scripts/bootbox.js"></script>
-<script src="~/Scripts/alertify.js"></script>
 
 <h2>Customers</h2>
 
@@ -46,13 +44,19 @@ else
 {
     @*
         TODO: CLEAN SCRIPT UP 
-        TODO: REMOVE UNUSED UI PACKAGES
+        TODO: REMOVE UNUSED UI PACKAGES (alertify, boombox)
         *@
     <script>
 
         // DELETE CUSTOMER
         // DO NOT TOUCH THIS CANCER FUNCTION PIECE OF SHIT LMAOOOOOOO
         $(document).ready(function () {
+
+            // INIT DATATABLES
+            $("#customers").DataTable();
+
+
+
             $("#customers").on("click", ".js-delete", function (e) {
                 e.preventDefault(); // CANCEL DEFAULT FUNCTION
 

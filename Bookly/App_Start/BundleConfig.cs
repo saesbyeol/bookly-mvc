@@ -11,8 +11,12 @@ namespace Bookly
         {
 
             
-            bundles.Add(new Bundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new Bundle("~/bundles/lib").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/scripts/datatables/jquery.datatables.js",
+                        "~/scripts/datatables/datatables.bootstrap.js"
+                        ));
 
             bundles.Add(new Bundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,14 +26,10 @@ namespace Bookly
             bundles.Add(new Bundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                                 "~/Scripts/bootstrap.js",
-                                 "~/scripts/bootbox.js",
-                                 "~/Scripts/alertify.js"
-                                 ));
 
             bundles.Add(new Bundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
+                      "~/content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css"));
         }
     }
