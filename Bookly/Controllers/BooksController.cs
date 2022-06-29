@@ -26,14 +26,14 @@ namespace Bookly.Controllers
 
         public ViewResult Index()
         {
-            if (User.IsInRole(RoleName.CanManageMovies))
+            if (User.IsInRole(RoleName.CanManageBooks))
                 return View("List");
                 return View("ReadOnlyList");
         }
 
         // ADD NEW BOOK
         // GET: Books/new
-        [Authorize(Roles = RoleName.CanManageMovies)]
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ViewResult New()
         {
             var genres = _context.Genres.ToList();
