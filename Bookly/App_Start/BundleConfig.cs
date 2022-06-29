@@ -23,7 +23,10 @@ namespace Bookly
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                                 "~/Scripts/bootstrap.js",
+                                 "~/scripts/bootbox.js",
+                                 "~/Scripts/alertify.js"
+                                 ));
 
             bundles.Add(new Bundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
