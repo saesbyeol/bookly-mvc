@@ -11,9 +11,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-
                 @if (User.IsInRole(RoleName.CanManageBooks))
                 {
+                    <li>@Html.ActionLink("New Rental", "New", "Rentals")</li>
                     <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
                 }
                 <li>@Html.ActionLink("Books", "Index", "Books")</li>
