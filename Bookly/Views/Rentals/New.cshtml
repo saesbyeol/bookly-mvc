@@ -4,8 +4,10 @@
     ViewBag.Title = "New Rental";
 }
 
-<h2>New Rental</h2>
+<h1>New Rental</h1>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AaNO3rENhDS4b8vr0_h0H9TYWbf3lC4kxr1yTB7lkNEcfj4xxKHeE7D_w1p11rpepxxXAaR_oP-ZMgmz"></script>
+
 
 <form id="newRental">
     <div class="form-group">
@@ -27,11 +29,38 @@
             <ul id="books" class="list-group"></ul>
         </div>
     </div>
+    
+    
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <button class="btn btn-primary">Rent</button>
+                <button type="button" class="btn btn-danger" onclick="ClearFields();">Clear</button>
+            </div>
+        </div>
+    </div>
+    
 
-    <button class="btn btn-primary">Save</button>
+    <hr></hr>
+    <h2>Alternative payment options</h2>
+    <div id="paypal-button-container"></div>
+
+
 </form>
 @section scripts
 {
+    <!-- EMAILJS CDN -->
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.0/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("u0CFaF26mMCxAaRse"); //use your USER ID
+        })();
+    </script>
+    
+
     @Scripts.Render("~/bundles/jqueryval")
     <!-- TWITTER TYPEAHEAD PLUGIN FOR AUTO-COMPLETION-->
     <script>
@@ -99,15 +128,28 @@
             var validator = $("#newRental").validate({
                 submitHandler: function () {
                     $.ajax({
-                        url: "/api/newRentals",
-                        method: "post",
-                        data: vm
-                    })
+                            url: "/api/newRentals",
+                            method: "post",
+                            data: vm
+                        })
                         .done(function () {
                             swal({
                                 icon: "success",
                                 text: "Rental successfully added!"
                             });
+
+                            // EMAILJS SEND TO USER ON RENTAL
+                            var templateParams = {
+                                name: 'Bookie',
+                                notes: 'Rent'
+                            };
+ 
+                            emailjs.send('service_3sryiyg', 'template_emcudbw', templateParams)
+                                .then(function(response) {
+                                    console.log('SUCCESS!', response.status, response.text);
+                                }, function(error) {
+                                    console.log('FAILED...', error);
+                                });
 
                             // RESETS THE FORM
                             $("#customer").typeahead("val", "");
@@ -130,6 +172,64 @@
             });
 
         });
+
+
+        // PAYPAL INTEGRATION
+        paypal.Buttons({
+            style: {
+                layout: 'horizontal',
+                color:  'black',
+                shape:  'pill',
+                label: 'paypal',
+                tagline: false
+            },
+            createOrder: function(data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01'
+                        }
+                    }]
+                });
+            },
+
+            onApprove: function(data, actions) {
+                swal({
+                    icon: "success",
+                    text: "You have successfully made your purchase!"
+                });
+
+                // EMAIL JS SEND EMAIL TO USER
+                var templateParams = {
+                    name: 'Bookie',
+                    notes: 'Purchase'
+                };
+ 
+                emailjs.send('service_3sryiyg', 'template_ake6wjk', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                    });
+            },
+
+            onError: function (err) {
+                swal({
+                    icon: "error",
+                    text: "Something went wrong, double check your entries and try again!"
+                });
+            }
+        }).render('#paypal-button-container');
+
+
+        function ClearFields() {
+
+            document.getElementById("customer").value = "";
+            var element = document.getElementById("books");
+            element.innerHTML = '';
+        }
+
     </script>
     <!-- /// -->
 }

@@ -48,5 +48,6 @@ namespace Bookly.Controllers.Api
 
             return Ok();
         }
+
     }
 }
