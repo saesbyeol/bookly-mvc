@@ -26,16 +26,16 @@ namespace Bookly.Controllers.Api
         {
             var booksQuery = _context.Books
                 .Include(b => b.Genre)
-                .Where(b => b.NumberAvailable > 0);
+                .ToList();
 
-            if (!String.IsNullOrWhiteSpace(query))
-                booksQuery = booksQuery.Where(b => b.Name.Contains(query));
+            //if (!String.IsNullOrWhiteSpace(query))
+            //    booksQuery = booksQuery.Where(b => b.Name.Contains(query)).ToList();
 
             return booksQuery
                 .ToList()
                 .Select(Mapper.Map<Book, BookDto>);
         }
-        
+
 
         //GET: /api/books/1
         public IHttpActionResult GetBook(int id)
